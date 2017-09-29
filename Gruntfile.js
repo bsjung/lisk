@@ -72,6 +72,11 @@ module.exports = function (grunt) {
 				maxBuffer: maxBufferSize
 			},
 
+			coverageSingleExtensive: {
+				command: 'export NODE_ENV=TEST && node_modules/.bin/istanbul cover --dir test/.coverage-unit --include-pid ./node_modules/.bin/_mocha $TEST',
+				maxBuffer: maxBufferSize
+			},
+
 			coverageUnit: {
 				command: 'node_modules/.bin/istanbul cover --dir test/.coverage-unit ./node_modules/.bin/_mocha test/unit/index.js',
 				maxBuffer: maxBufferSize
@@ -143,6 +148,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('default', ['release']);
 	grunt.registerTask('release', ['exec:folder', 'obfuscator', 'exec:createBundles', 'exec:package', 'exec:build', 'compress']);
 	grunt.registerTask('jenkins', ['exec:coverageSingle']);
+	grunt.registerTask('jenkins-extensive', ['exec:coverageSingleExtensive']);
 	grunt.registerTask('coverageReport', ['exec:coverageReport']);
 	grunt.registerTask('eslint-nofix', ['eslint']);
 	grunt.registerTask('test', ['eslint', 'exec:coverage']);
